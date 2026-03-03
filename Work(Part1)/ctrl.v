@@ -4,11 +4,10 @@
 `timescale 1ns/100ps
 
 module ctrl (clk, rst_f, opcode, mm, stat, rf_we, alu_op, wb_sel);
-
-  /* Declare the ports listed above as inputs or outputs.  Note that this is
+/* Declare the ports listed above as inputs or outputs.  Note that this is
      only the signals for part 1.  You will be adding signals for parts 2,
-     2, and 4. /*
-  
+     2, and 4. */
+
   input clk, rst_f;
   input [3:0] opcode, mm, stat;
   output reg rf_we, wb_sel;
@@ -58,7 +57,7 @@ module ctrl (clk, rst_f, opcode, mm, stat, rf_we, alu_op, wb_sel);
       start1:
 	  if (rst_f == 1'b0) 
         next_state = start1;
-	 else
+	  else
          next_state = fetch;
       fetch:
         next_state = decode;
