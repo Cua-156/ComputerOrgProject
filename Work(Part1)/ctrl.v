@@ -76,10 +76,36 @@ module ctrl (clk, rst_f, opcode, mm, stat, rf_we, alu_op, wb_sel);
 
   always @(present_state, opcode)
   begin
-
+    
   /* TODO: Generate combinational signals based on the FSM states and inputs. For Parts 2, 3 and 4 you will
        add the new control signals here. */
 
+       
+    // Default control signal values
+    rf_we  = 1'b0;
+    alu_op = 4'b0000;
+    wb_sel = 1'b0;
+
+    case(present_state)
+      execute: begin
+        case(opcode)
+          REG_OP: alu_op = 4'b0001;
+          REG_IM: alu_op = 4'b0011;
+        endcase
+      end
+      mem: begin
+        case(opcode)
+          REG_OP: alu_op = 4'b0001;
+          REG_IM: alu_op = 4'b0011;
+        endcase
+      end
+      writeback: begin
+        case(opcode)
+          REG_OP: rf_we = 1'b1;
+          REG_IM: rf_we = 1'b1;
+        endcase
+      end
+    endcase
   end
 
 // Halt on HLT instruction
